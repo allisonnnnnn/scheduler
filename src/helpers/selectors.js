@@ -13,3 +13,15 @@ export const getAppointmentsForDay = (state, day) => {
 
   return appointments;
 };
+
+export const getInterview = (state, interview) => {
+  if (!interview) {
+    return null;
+  }
+  const id = interview.interviewer;
+  const result = {
+    student: interview.student,
+    interviewer: state.interviewers[id]
+  };
+  return result;
+};
