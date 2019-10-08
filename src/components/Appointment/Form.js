@@ -4,23 +4,29 @@ import Button from "components/Button";
 import InterviewerList from "components/InterviewList";
 
 export default function Form(props) {
-  const { name, interviewers, interviewer, onSave, onCancel } = props;
-  const [studentName, updateStudentName] = useState(name || "");
-  const [selectedInterviewer, setInterviewer] = useState(interviewer || null);
+  const [interviewer, setInterviewer] = useState(props.interviewer || null);
+  const [studentName, setStudentName] = useState(props.name || "");
+  const [error, setError] = useState("");
 
   const reset = function() {
     setInterviewer(null);
-    updateStudentName("");
+    setStudentName("");
   };
 
   const cancel = function() {
-    onCancel();
+    props.onCancel();
     reset();
   };
 
-  const save = () => {
-    onSave(name, interviewer);
-  };
+  function validate() {
+    if (studentName === "") {
+      setError("Student name cannot be blank");
+      return;
+    }
+
+    setError("");
+    props.onSave(studentName, interviewer);
+  }
 
   return (
     <main className="appointment__card appointment__card--create">
@@ -32,24 +38,23 @@ export default function Form(props) {
             type="text"
             placeholder="Enter Student Name"
             value={studentName}
-            onChange={({ target: { value } }) => updateStudentName(value)}
-            /*
-          This must be a controlled component
-        */
+            onChange={event => setStudentName(event.target.value)}
+            data-testid="student-name-input"
           />
         </form>
+        <section className="appointment__validation">{error}</section>
         <InterviewerList
-          interviewers={interviewers}
-          value={selectedInterviewer}
+          interviewers={props.interviewers}
+          value={interviewer}
           onChange={setInterviewer}
         />
       </section>
       <section className="appointment__card-right">
         <section className="appointment__actions">
-          <Button danger onClick={cancel}>
+          <Button onClick={() => cancel()} danger>
             Cancel
           </Button>
-          <Button confirm onClick={() => save()}>
+          <Button onClick={() => validate()} confirm>
             Save
           </Button>
         </section>

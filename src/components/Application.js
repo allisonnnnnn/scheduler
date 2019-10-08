@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
 
 import "components/Application.scss";
 import DayList from "components/DayList";
@@ -19,22 +18,9 @@ export default function Application(props) {
     cancelInterview
   } = useApplicationData();
 
+  const appointments = getAppointmentsForDay(state, state.day);
   const interviewers = getInterviewersForDay(state, state.day);
-  const appointments = getAppointmentsForDay(state, state.day).map(
-    appointment => {
-      return (
-        <Appointment
-          key={appointment.id}
-          id={appointment.id}
-          time={appointment.time}
-          interview={getInterview(state, appointment.interview)}
-          interviewers={interviewers}
-          bookInterview={bookInterview}
-          cancelInterview={cancelInterview}
-        />
-      );
-    }
-  );
+
   return (
     <main className="layout">
       <section className="sidebar">
@@ -54,7 +40,19 @@ export default function Application(props) {
         />
       </section>
       <section className="schedule">
-        {appointments}
+        {appointments.map(appointmentItem => {
+          const interview = getInterview(state, appointmentItem.interview);
+          return (
+            <Appointment
+              {...appointmentItem}
+              key={appointmentItem.id}
+              interview={interview}
+              interviewers={interviewers}
+              bookInterview={bookInterview}
+              cancelInterview={cancelInterview}
+            />
+          );
+        })}
         <Appointment key="last" time="5pm" />
       </section>
     </main>
