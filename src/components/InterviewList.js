@@ -2,7 +2,7 @@ import React from "react";
 // import classNames from "classnames";
 import InterviewerListItem from "components/InterviewerListItem";
 import "components/InterviewList.scss";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 
 export default function InterviewList(props) {
   const interviewers = props.interviewers.map(interviewer => {
@@ -25,7 +25,7 @@ export default function InterviewList(props) {
   );
 }
 
-InterviewList.propTypes = {
-  value: PropTypes.number,
-  onChange: PropTypes.func.isRequired
-};
+// InterviewList.propTypes = {
+//   value: PropTypes.number,
+//   onChange: PropTypes.func.isRequired
+// };

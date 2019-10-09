@@ -62,7 +62,6 @@ export default function useApplicationData() {
     };
 
     return axios.put(`/api/appointments/${id}`, appointment).then(() =>
-      // 差点什么东西，edit必须要更新
       dispatch({
         type: SET_INTERVIEW,
         appointments,
