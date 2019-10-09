@@ -1,5 +1,11 @@
 # Interview Scheduler
 
+## Screenshots
+
+!["main page"](./images/1.png)
+!["create a new appointment"](./images/2.png)
+!["after create a new appointment"](./images/3.png)
+
 ## Setup
 
 Install dependencies with `npm install`.
